@@ -239,27 +239,11 @@ export default function Home() {
                 gap: 5,
               }}>
               <IconButton
+                onPress={() => {
+                  navigation.navigate('Networks');
+                }}
                 disabled={!loggedIn}
-                icon={<ArrowDown color={constants.primaryColor} />}
-              />
-              <Text
-                style={{
-                  fontSize: 10,
-                  fontWeight: 'bold',
-                  textAlign: 'center',
-                  color: 'white',
-                }}>
-                Receive
-              </Text>
-            </View>
-            <View
-              style={{
-                alignItems: 'center',
-                gap: 5,
-              }}>
-              <IconButton
-                disabled={!loggedIn}
-                theme="secondary"
+                theme="main"
                 icon={<ArrowUp color={constants.primaryColor} />}
               />
               <Text
@@ -270,6 +254,26 @@ export default function Home() {
                   color: 'white',
                 }}>
                 Send
+              </Text>
+            </View>
+            <View
+              style={{
+                alignItems: 'center',
+                gap: 5,
+              }}>
+              <IconButton
+                disabled={!loggedIn}
+                theme="secondary"
+                icon={<ArrowDown color={constants.primaryColor} />}
+              />
+              <Text
+                style={{
+                  fontSize: 10,
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  color: 'white',
+                }}>
+                Receive
               </Text>
             </View>
             {loggedIn && (
