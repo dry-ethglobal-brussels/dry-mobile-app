@@ -34,6 +34,11 @@ RCT_EXTERN_METHOD(signMessage:(NSString)alias
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 
+// checkHasKey
+RCT_EXTERN_METHOD(checkHasKey:(NSString)alias
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject)
+
 
 - (id)init
 {

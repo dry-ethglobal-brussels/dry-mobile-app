@@ -1,6 +1,7 @@
 import {NativeModules} from 'react-native';
 import {base64ToHex, bigIntToBytes, bytesToBigInt, hexToBytes} from '.';
 import {p256} from '@noble/curves/p256';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LINKING_ERROR = 'Enclave Module is not linked';
 
@@ -66,6 +67,10 @@ export function parseAndNormalizeSig(derSig: string): number[] {
   return [...bigIntToBytes(r), ...bigIntToBytes(s)];
 }
 
+export async function checkHasKey(): Promise<boolean> {
+  return (await AsyncStorage.getItem('publicKey')) !== null;
+}
+
 export async function getPublicKey(): Promise<{
   x: number[];
   y: number[];
@@ -79,6 +84,7 @@ export async function generateKeyPair(): Promise<{
   y: number[];
 }> {
   const publicKeyBase64 = await EnclaveModule.generateKeyPair(ALIAS);
+  AsyncStorage.setItem('publicKey', publicKeyBase64);
   return formatPublicKey(publicKeyBase64);
 }
 

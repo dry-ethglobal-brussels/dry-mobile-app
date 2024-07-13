@@ -7,6 +7,20 @@ class EnclaveModule: NSObject {
 
     /// Signing algorithm used by Enclave
     static var algorithm: SecKeyAlgorithm = .ecdsaSignatureMessageX962SHA256
+
+    private func hasKey(alias: String) -> Bool {
+        let tag = alias.data(using: .utf8)!
+        
+        let query: [String: Any] = [
+            kSecClass as String               : kSecClassKey,
+            kSecAttrApplicationTag as String  : tag,
+            kSecAttrKeyType as String         : kSecAttrKeyTypeEC,
+            kSecReturnRef as String           : true
+        ]
+        
+        let status = SecItemCopyMatching(query as CFDictionary, nil)
+        return status == errSecSuccess
+    }
         
     /// Internal function to get an enclave key handle using key alias
     private func getKeyHandle(alias: String) -> SecKey? {
@@ -207,6 +221,16 @@ class EnclaveModule: NSObject {
         } catch {
             reject(nil, "Unknown error", nil)
         }
+    }
+
+    @objc(checkHasKey:resolver:rejecter:)
+    func checkHasKey(
+        _ alias: NSString,
+        resolver resolve: RCTPromiseResolveBlock,
+        rejecter reject: RCTPromiseRejectBlock
+    ) -> Void {
+        print("[EnclaveModule] checkHasKey called")
+        resolve(["success": hasKey(alias: alias as String)])
     }
 
     /// Adds SECP256R1 curve header to the public key

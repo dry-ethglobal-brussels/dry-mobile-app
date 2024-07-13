@@ -8,6 +8,10 @@ export function formatProof(proof: string) {
   )}`;
 }
 
+export function formatAddress(address: string) {
+  return `${address.substring(0, 6)}...${address.substring(38, 42)}`;
+}
+
 export function stringToBytes(str: string): number[] {
   return Buffer.from(str).toJSON().data;
 }

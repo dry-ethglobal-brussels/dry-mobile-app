@@ -1,5 +1,6 @@
 import React from 'react';
 import {TouchableOpacity, StyleSheet} from 'react-native';
+import constants from '../constants';
 
 export default function Button({
   theme = 'primary',
@@ -37,9 +38,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   primary: {
-    backgroundColor: '#151628',
+    backgroundColor: constants.primaryColor,
     borderWidth: 1,
-    borderColor: '#151628',
+    borderColor: constants.primaryColor,
     gap: 5,
     color: 'white',
   },
