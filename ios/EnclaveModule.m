@@ -1,6 +1,6 @@
 //
 //  EnclaveModule.m
-//  NoirReactNative
+//  DryMobileApp
 //
 //  Created by Theo Madzou on 21/02/2024.
 //
