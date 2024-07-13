@@ -7,6 +7,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import Networks from './pages/networks';
 import Currencies from './pages/currencies';
 import Send from './pages/send';
+import Receive from './pages/receive';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ function App(): React.JSX.Element {
           <Stack.Screen name="Networks" component={Networks} />
           <Stack.Screen name="Currencies" component={Currencies} />
           <Stack.Screen name="Send" component={Send} />
+          <Stack.Screen name="Receive" component={Receive} />
         </Stack.Navigator>
       </NavigationContainer>
     </TamaguiProvider>

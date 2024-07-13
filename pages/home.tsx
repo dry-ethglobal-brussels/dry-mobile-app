@@ -264,6 +264,9 @@ export default function Home() {
               <IconButton
                 disabled={!loggedIn}
                 theme="secondary"
+                onPress={() => {
+                  navigation.navigate('Receive');
+                }}
                 icon={<ArrowDown color={constants.primaryColor} />}
               />
               <Text

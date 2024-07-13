@@ -8,7 +8,10 @@ export function formatProof(proof: string) {
   )}`;
 }
 
-export function formatAddress(address: string) {
+export function formatAddress(address: string, long = false) {
+  if (long) {
+    return `${address.substring(0, 12)}...${address.substring(32, 42)}`;
+  }
   return `${address.substring(0, 6)}...${address.substring(38, 42)}`;
 }
 
