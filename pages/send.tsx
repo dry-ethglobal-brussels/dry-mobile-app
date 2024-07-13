@@ -1,20 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
-import {
-  Alert,
-  Image,
-  ImageSourcePropType,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Alert, Text, TextInput, View} from 'react-native';
 import MainLayout from '../layouts/MainLayout';
 import Button from '../components/Button';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import numeral from 'numeral';
 import constants from '../constants';
 import IconButton from '../components/IconButton';
 import {ArrowLeft} from '@tamagui/lucide-icons';
@@ -23,12 +12,17 @@ import {signMessage} from '../lib/secure-enclave';
 export default function Send() {
   const navigation = useNavigation();
   const [amount, setAmount] = useState<string>();
+  const [address, setAddress] = useState<string>();
   const route = useRoute();
 
   const onConfirm = async () => {
     try {
       if (!amount) {
         Alert.alert('Please enter an amount');
+        return;
+      }
+      if (!address) {
+        Alert.alert('Please enter a recipient address');
         return;
       }
       const signature = await signMessage(
@@ -126,13 +120,42 @@ export default function Send() {
           flex: 1,
           paddingVertical: 30,
           paddingHorizontal: 20,
-          gap: 20,
           backgroundColor: 'white',
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
           marginTop: -20,
         }}>
-        <Button onPress={onConfirm}>
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: 'bold',
+            color: constants.primaryColor,
+            marginBottom: 10,
+          }}>
+          Recipient
+        </Text>
+        <TextInput
+          placeholderTextColor={constants.lightTextColor}
+          placeholder="0x1234567890abcdef1234567890abcdef12345678"
+          value={address}
+          onChangeText={text => {
+            setAddress(text);
+          }}
+          style={{
+            fontSize: 12,
+            paddingVertical: 15,
+            paddingHorizontal: 20,
+            color: constants.primaryColor,
+            borderColor: '#E0E0E0',
+            borderWidth: 1,
+            borderRadius: 12,
+          }}
+        />
+        <Button
+          style={{
+            marginTop: 20,
+          }}
+          onPress={onConfirm}>
           <Text
             style={{
               fontSize: 16,

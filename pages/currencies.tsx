@@ -27,7 +27,7 @@ const CURRENCIES = [
   {
     image: require('../assets/images/chains/ethereum.png'),
     name: 'ETH',
-    networks: ['Ethereum', 'Scroll'],
+    networks: ['Ethereum', 'Scroll', 'Linea'],
   },
   {
     image: require('../assets/images/chains/polygon.png'),
@@ -42,7 +42,7 @@ const CURRENCIES = [
   {
     image: require('../assets/images/currencies/usdc.png'),
     name: 'USDC',
-    networks: ['Ethereum', 'Polygon', 'Gnosis'],
+    networks: ['Ethereum', 'Polygon', 'Gnosis', 'Scroll', 'Linea'],
   },
 ];
 

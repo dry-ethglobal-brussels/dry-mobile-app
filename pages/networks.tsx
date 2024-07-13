@@ -44,6 +44,11 @@ const NETWORKS = [
     name: 'Gnosis',
     subname: 'Chiado',
   },
+  {
+    image: require('../assets/images/chains/linea.png'),
+    name: 'Linea',
+    subname: 'Sepolia',
+  },
 ];
 
 function Network({
