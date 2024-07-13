@@ -1115,8 +1115,6 @@ PODS:
     - React-perflogger (= 0.73.1)
   - RNCAsyncStorage (1.24.0):
     - React-Core
-  - RNDateTimePicker (7.6.2):
-    - React-Core
   - RNKeychain (8.2.0):
     - React-Core
   - RNScreens (3.29.0):
@@ -1203,7 +1201,6 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
-  - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -1325,8 +1322,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
-  RNDateTimePicker:
-    :path: "../node_modules/@react-native-community/datetimepicker"
   RNKeychain:
     :path: "../node_modules/react-native-keychain"
   RNScreens:
@@ -1398,7 +1393,6 @@ SPEC CHECKSUMS:
   React-utils: debda2c206770ee2785bdebb7f16d8db9f18838a
   ReactCommon: ddb128564dcbfa0287d3d1a2d10f8c7457c971f6
   RNCAsyncStorage: ec53e44dc3e75b44aa2a9f37618a49c3bc080a7a
-  RNDateTimePicker: fc2e4f2795877d45e84d85659bebe627eba5c931
   RNKeychain: bfe3d12bf4620fe488771c414530bf16e88f3678
   RNScreens: b582cb834dc4133307562e930e8fa914b8c04ef2
   RNSVG: cb24fb322de8c1ebf59904e7aca0447bb8dbed5a

@@ -7,7 +7,13 @@ import {useNavigation} from '@react-navigation/native';
 import numeral from 'numeral';
 import constants from '../constants';
 import IconButton from '../components/IconButton';
-import {ArrowDown, ArrowUp, LogIn, LogOut} from '@tamagui/lucide-icons';
+import {
+  ArrowDown,
+  ArrowUp,
+  LogIn,
+  LogOut,
+  RefreshCcw,
+} from '@tamagui/lucide-icons';
 import {format} from 'date-fns';
 import {formatAddress} from '../lib';
 import {
@@ -184,6 +190,8 @@ export default function Home() {
     logIn();
   }, []);
 
+  const onRefresh = async () => {};
+
   return (
     <MainLayout
       statusBarStyle="light-content"
@@ -277,6 +285,27 @@ export default function Home() {
                   color: 'white',
                 }}>
                 Receive
+              </Text>
+            </View>
+            <View
+              style={{
+                alignItems: 'center',
+                gap: 5,
+              }}>
+              <IconButton
+                disabled={!loggedIn}
+                theme="secondary"
+                onPress={onRefresh}
+                icon={<RefreshCcw color={constants.primaryColor} />}
+              />
+              <Text
+                style={{
+                  fontSize: 10,
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  color: 'white',
+                }}>
+                Refresh
               </Text>
             </View>
             {loggedIn && (
