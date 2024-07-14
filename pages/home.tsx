@@ -1,8 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
-import {StatusBar, StyleSheet, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import MainLayout from '../layouts/MainLayout';
-import Button from '../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import numeral from 'numeral';
 import constants from '../constants';
@@ -14,13 +13,24 @@ import {
   LogOut,
   RefreshCcw,
 } from '@tamagui/lucide-icons';
-import {format} from 'date-fns';
+import {format, set} from 'date-fns';
 import {formatAddress} from '../lib';
 import {
   checkHasKey,
   generateKeyPair,
   getPublicKey,
 } from '../lib/secure-enclave';
+import {getProof, Tree} from '../lib/tree';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  getAllBalances,
+  getBalance,
+  useBalance,
+  useFormattedBalance,
+  useFormattedBalanceUsd,
+  useFormattedEthUsdPrice,
+} from '../lib/blockchain';
+import {BigNumber, ethers} from 'ethers';
 
 const SAFE_ADDRESS = '0x1234567890abcdef1234567890abcdef12345678';
 const RECIPIENT_ADDRESS = '0xaabbccddeeff00112233445566778899aabbccdd';
@@ -166,23 +176,23 @@ function TransactionItem({
 
 export default function Home() {
   const navigation = useNavigation();
-  const [balance, setBalance] = useState(450.334);
+  //const [balance, setBalance] = useState(450.334);
   const [loggedIn, setLoggedIn] = useState(false);
+  const balance = useFormattedBalance(constants.safeAddresses.ethereum.sepolia);
 
   const logIn = async () => {
     if (loggedIn) {
       return;
     }
     try {
-      const success = await checkHasKey();
-      if (!success) {
-        await generateKeyPair();
-      } else {
-        await getPublicKey();
-      }
+      await getPublicKey();
       setLoggedIn(true);
     } catch (error) {
       console.log(error);
+      try {
+        await generateKeyPair();
+        setLoggedIn(true);
+      } catch (error) {}
     }
   };
 
@@ -221,7 +231,7 @@ export default function Home() {
                 fontWeight: 'bold',
                 color: 'white',
               }}>
-              ${numeral(balance).format('0,0.00')}
+              {numeral(balance).format('0,0.00')} ETH
             </Text>
           )}
           {!loggedIn && (

@@ -26,7 +26,7 @@ import {
 import QRCode from 'react-native-qrcode-svg';
 import {formatAddress} from '../lib';
 
-const SAFE_ADDRESS = '0x1234567890abcdef1234567890abcdef12345678';
+const SAFE_ADDRESS = constants.safeAddresses.ethereum.sepolia;
 
 export default function Receive() {
   const navigation = useNavigation();

@@ -210,7 +210,7 @@ class EnclaveModule: NSObject {
         
         // Get the key handle
         let keyHandle = getKeyHandle(alias: alias as String)!
-        
+               
         // Try to sign the message
         do {
             let signature = try sign(message as String, keyHandle)

@@ -5,8 +5,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LINKING_ERROR = 'Enclave Module is not linked';
 
-const EnclaveModule = NativeModules.EnclaveModule
-  ? NativeModules.EnclaveModule
+const SecureEnclave = NativeModules.SecureEnclaveModule
+  ? NativeModules.SecureEnclaveModule
   : new Proxy(
       {},
       {
@@ -16,7 +16,7 @@ const EnclaveModule = NativeModules.EnclaveModule
       },
     );
 
-const ALIAS: string = 'com.dry.app';
+const ALIAS: string = 'mainkey';
 
 const derPrefix = '3059301306072a8648ce3d020106082a8648ce3d03010703420004';
 
@@ -27,11 +27,11 @@ export function isDERPubKey(pubKeyHex: string): boolean {
   );
 }
 
-export function formatPublicKey(base64Signature: string): {
+export function formatPublicKey(pubKeyHex: string): {
   x: number[];
   y: number[];
 } {
-  const pubKeyHex = base64ToHex(base64Signature);
+  console.log(pubKeyHex);
   if (!isDERPubKey(pubKeyHex)) {
     throw new Error('Invalid public key format');
   }
@@ -64,6 +64,8 @@ export function parseAndNormalizeSig(derSig: string): number[] {
   if (s > n / 2n) {
     s = n - s;
   }
+  console.log('signature');
+  console.log([...bigIntToBytes(r), ...bigIntToBytes(s)]);
   return [...bigIntToBytes(r), ...bigIntToBytes(s)];
 }
 
@@ -75,24 +77,24 @@ export async function getPublicKey(): Promise<{
   x: number[];
   y: number[];
 }> {
-  const publicKeyBase64 = await EnclaveModule.getPublicKey(ALIAS);
-  return formatPublicKey(publicKeyBase64);
+  const {publicKey} = await SecureEnclave.fetchPublicKey(ALIAS);
+  return formatPublicKey(publicKey);
 }
 
 export async function generateKeyPair(): Promise<{
   x: number[];
   y: number[];
 }> {
-  const publicKeyBase64 = await EnclaveModule.generateKeyPair(ALIAS);
-  AsyncStorage.setItem('publicKey', publicKeyBase64);
-  return formatPublicKey(publicKeyBase64);
+  const {publicKey} = await SecureEnclave.createKeyPair(ALIAS);
+  return formatPublicKey(publicKey);
 }
 
 export async function deleteKeyPair(): Promise<void> {
-  return await EnclaveModule.deleteKeyPair(ALIAS);
+  return await SecureEnclave.deleteKeyPair(ALIAS);
 }
 
 export async function signMessage(data: string): Promise<number[]> {
-  const signatureBase64 = await EnclaveModule.signMessage(ALIAS, data);
-  return parseAndNormalizeSig(base64ToHex(signatureBase64));
+  const {signature} = await SecureEnclave.sign(ALIAS, data);
+  console.log(signature);
+  return parseAndNormalizeSig(signature);
 }

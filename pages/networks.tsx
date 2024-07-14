@@ -32,7 +32,7 @@ const NETWORKS = [
   {
     image: require('../assets/images/chains/polygon.png'),
     name: 'Polygon',
-    subname: 'Mumbai',
+    subname: 'Amoy',
   },
   {
     image: require('../assets/images/chains/scroll.jpeg'),
@@ -48,6 +48,11 @@ const NETWORKS = [
     image: require('../assets/images/chains/linea.png'),
     name: 'Linea',
     subname: 'Sepolia',
+  },
+  {
+    image: require('../assets/images/chains/celo.jpeg'),
+    name: 'Celo',
+    subname: 'Alfajores',
   },
 ];
 

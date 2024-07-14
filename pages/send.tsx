@@ -8,14 +8,19 @@ import constants from '../constants';
 import IconButton from '../components/IconButton';
 import {ArrowLeft} from '@tamagui/lucide-icons';
 import {signMessage} from '../lib/secure-enclave';
+import {bytesToHex} from '../lib';
+import {getProof} from '../lib/tree';
+import {sendTx} from '../lib/tx';
 
 export default function Send() {
   const navigation = useNavigation();
   const [amount, setAmount] = useState<string>();
   const [address, setAddress] = useState<string>();
+  const [generatingProof, setGeneratingProof] = useState(false);
   const route = useRoute();
 
   const onConfirm = async () => {
+    setGeneratingProof(true);
     try {
       if (!amount) {
         Alert.alert('Please enter an amount');
@@ -25,22 +30,19 @@ export default function Send() {
         Alert.alert('Please enter a recipient address');
         return;
       }
-      const signature = await signMessage(
-        JSON.stringify({
-          amount,
-          currency: (route.params as any)?.currency,
-          network: (route.params as any)?.network,
-          subnetwork: (route.params as any)?.subnetwork,
-        }),
+      await signMessage("I'm sending money");
+
+      const {_proof, pubKeyHash} = await getProof();
+      sendTx(
+        _proof,
+        bytesToHex(Array.from(pubKeyHash)),
+        Number(amount?.replace(',', '.') || 0),
       );
-      console.log(signature);
-      setTimeout(() => {
-        Alert.alert('Transaction initiated!');
-      }, 1000);
       navigation.navigate('Home');
     } catch (error) {
       console.log(error);
     }
+    setGeneratingProof(false);
   };
 
   return (
@@ -92,7 +94,7 @@ export default function Send() {
             onChangeText={text => {
               setAmount(text);
             }}
-            value={amount?.toString()}
+            value={amount}
             style={{
               // Slowly reduce the font size with each character
               fontSize: Math.max(
@@ -152,6 +154,7 @@ export default function Send() {
           }}
         />
         <Button
+          disabled={generatingProof}
           style={{
             marginTop: 20,
           }}
@@ -162,7 +165,7 @@ export default function Send() {
               fontWeight: 'bold',
               color: 'white',
             }}>
-            Confirm
+            {generatingProof ? 'Loading...' : 'Confirm'}
           </Text>
         </Button>
       </View>

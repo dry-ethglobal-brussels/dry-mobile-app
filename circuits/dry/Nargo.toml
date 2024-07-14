@@ -1,0 +1,8 @@
+[package]
+name = "circuit"
+type = "bin"
+authors = ["Théo Madzou"]
+compiler_version = ">=0.19.3"
+
+[dependencies]
+trees = { git = "https://github.com/privacy-scaling-explorations/zk-kit.noir", tag = "zpedro/update_0.30.0", directory = "packages/merkle-trees" }

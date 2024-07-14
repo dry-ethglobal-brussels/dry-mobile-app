@@ -1,7 +1,7 @@
 use dep::std::ecdsa_secp256r1;
 
-fn main(public_key_x: [u8; 32], public_key_y: [u8; 32], signature: [u8; 64], message_hash: [u8; 32]) {
-    let valid_signature = ecdsa_secp256r1::verify_signature(public_key_x, public_key_y, signature, message_hash);
+fn main(x: [u8; 32], y: [u8; 32], signature: [u8; 64], msgHash: [u8; 32]) {
+    let valid_signature = ecdsa_secp256r1::verify_signature(x, y, signature, msgHash);
     assert(valid_signature);
 }
 
